@@ -57,10 +57,15 @@ local backgroundScroll = 0
 local ground = love.graphics.newImage('ground.png')
 local groundScroll = 0
 
+local pauseScreen = love.graphics.newImage('pause_screen.png')
+
 local BACKGROUND_SCROLL_SPEED = 30
 local GROUND_SCROLL_SPEED = 60
 
 local BACKGROUND_LOOPING_POINT = 413
+
+-- whether or not the game is paused, applies to all states, not just play state
+local paused = false
 
 function love.load()
     -- initialize our nearest-neighbor filter
@@ -85,6 +90,7 @@ function love.load()
         ['explosion'] = love.audio.newSource('explosion.wav', 'static'),
         ['hurt'] = love.audio.newSource('hurt.wav', 'static'),
         ['score'] = love.audio.newSource('score.wav', 'static'),
+        ['pause'] = love.audio.newSource('pause.wav', 'static'),
 
         -- https://freesound.org/people/xsgianni/sounds/388079/
         ['music'] = love.audio.newSource('marios_way.mp3', 'static')
@@ -128,6 +134,20 @@ function love.keypressed(key)
     if key == 'escape' then
         love.event.quit()
     end
+
+    if key == 'p' then
+        -- same sound for both pause/resume
+        sounds['pause']:play()
+        -- game is already paused, unpause
+        if paused then
+            paused = false
+            sounds['music']:resume()
+        else
+        -- pause game, regardless of state
+            paused = true
+            sounds["music"]:pause()
+        end
+    end
 end
 
 --[[
@@ -154,6 +174,10 @@ function love.mouse.wasPressed(button)
 end
 
 function love.update(dt)
+    if paused then
+        return
+    end
+
     -- scroll our background and ground, looping back to 0 after a certain amount
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOPING_POINT
     groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) % VIRTUAL_WIDTH
@@ -170,6 +194,10 @@ function love.draw()
     love.graphics.draw(background, -backgroundScroll, 0)
     gStateMachine:render()
     love.graphics.draw(ground, -groundScroll, VIRTUAL_HEIGHT - 16)
+
+    if paused then
+        love.graphics.draw(pauseScreen, 0, 0)
+    end
 
     push:finish()
 end

@@ -28,10 +28,24 @@ end
 function ScoreState:render()
     -- simply render the score to the middle of the screen
     love.graphics.setFont(flappyFont)
-    love.graphics.printf('Oof! You lost!', 0, 64, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Oof! You lost!', 0, 32, VIRTUAL_WIDTH, 'center')
 
     love.graphics.setFont(mediumFont)
-    love.graphics.printf('Score: ' .. tostring(self.score), 0, 100, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Score: ' .. tostring(self.score), 0, 70, VIRTUAL_WIDTH, 'center')
 
-    love.graphics.printf('Press Enter to Play Again!', 0, 160, VIRTUAL_WIDTH, 'center')
+    -- display a medal (if any) for the player's performance
+    medalImage = nil
+    if self.score >= 5 then
+        medalImage = love.graphics.newImage("flawless_flapper.png")
+    elseif self.score >= 3 then
+        medalImage = love.graphics.newImage("happy_bird.png")
+    elseif self.score >= 1 then 
+        medalImage = love.graphics.newImage("lame_duck.png")
+    end
+
+    if medalImage ~= nil then
+        love.graphics.draw(medalImage, VIRTUAL_WIDTH / 2 - 64, VIRTUAL_HEIGHT / 2 - 64, 0, 1, 1)
+    end
+
+    love.graphics.printf('Press Enter to Play Again!', 0, 200, VIRTUAL_WIDTH, 'center')
 end
