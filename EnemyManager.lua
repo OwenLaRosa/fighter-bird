@@ -6,6 +6,10 @@ function EnemyManager:init()
 
     self.spawnInterval = 1
     self.lastSpawnedEnemy = 0
+
+    self.aircraftImage = love.graphics.newImage('aircraft.png')
+    self.saucerImage = love.graphics.newImage('saucer.png')
+    self.healthPowerupImage = love.graphics.newImage('health_powerup.png')
 end
 
 function EnemyManager:update(dt)
@@ -24,9 +28,13 @@ function EnemyManager:update(dt)
                 fireInterval = 1,
                 sprayMin = -400,
                 sprayMax = 400,
+                image = self.saucerImage,
+                width = 60,
+                height = 20,
                 powerup = Powerup({
                     property = "health",
-                    value = 25
+                    value = 25,
+                    image = self.healthPowerupImage
                 })
             }))
         else
@@ -40,7 +48,10 @@ function EnemyManager:update(dt)
                 projectileSpeed = 100,
                 fireInterval = 1.2,
                 sprayMin = 0,
-                sprayMax = 0
+                sprayMax = 0,
+                image = self.aircraftImage,
+                width = 62,
+                height = 32,
             }))
         end
     end

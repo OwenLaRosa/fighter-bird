@@ -11,12 +11,12 @@ function Enemy:init(def)
     self.powerup = def.powerup
     self.sprayMin = def.sprayMin
     self.sprayMax = def.sprayMax
+    self.width = def.width
+    self.height = def.height
+    self.image = def.image
 
     self.x = VIRTUAL_WIDTH + 64
     self.y = VIRTUAL_HEIGHT/2
-
-    self.width = 20
-    self.height = 20
 
     self.remove = false
 
@@ -43,7 +43,5 @@ function Enemy:collides(object)
 end
 
 function Enemy:render()
-    love.graphics.setColor(255, 0, 0, 255)
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
-    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.draw(self.image, self.x, self.y, 0, 2, 2)
 end

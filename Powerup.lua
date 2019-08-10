@@ -3,14 +3,15 @@ Powerup = Class{}
 function Powerup:init(def)
     self.property = def.property
     self.value = def.value
+    self.image = def.image
 
     -- set with enemy's position after it's been defeated
     self.x = 0
     self.y = 0
 
     self.speed = PIPE_SPEED -- should appear stationary
-    self.width = 16
-    self.height = 16
+    self.width = 24
+    self.height = 24
 
     self.remove = false
 end
@@ -23,9 +24,7 @@ function Powerup:update(dt)
 end
 
 function Powerup:render()
-    love.graphics.setColor(0, 255, 255, 255)
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
-    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.draw(self.image, self.x, self.y)
 end
 
 function Powerup:collides(object)
