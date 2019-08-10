@@ -4,7 +4,7 @@ function EnemyManager:init()
     self.enemies = {}
     self.projectiles = {}
 
-    self.spawnInterval = 1
+    self.spawnInterval = 0.5
     self.lastSpawnedEnemy = 0
 
     self.aircraftImage = love.graphics.newImage('aircraft.png')
