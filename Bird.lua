@@ -55,7 +55,7 @@ function Bird:update(dt)
 
     self.y = self.y + self.dy
 
-    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+    if love.keyboard.wasPressed('lshift') or love.keyboard.wasPressed('rshift') then
         table.insert(self.projectiles, Projectile(self.x, self.y, VIRTUAL_WIDTH, self.y, 300, 10))
     end
 end
