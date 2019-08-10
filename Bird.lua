@@ -21,6 +21,8 @@ function Bird:init()
     self.height = self.image:getHeight()
 
     self.dy = 0
+
+    self.projectiles = {}
 end
 
 --[[
@@ -51,8 +53,15 @@ function Bird:update(dt)
     end
 
     self.y = self.y + self.dy
+
+    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        table.insert(self.projectiles, Projectile(self.x, self.y, VIRTUAL_WIDTH, self.y, 50))
+    end
 end
 
 function Bird:render()
+    for k, projectile in pairs(self.projectiles) do
+        projectile:render()
+    end
     love.graphics.draw(self.image, self.x, self.y)
 end

@@ -23,6 +23,8 @@ function PlayState:init()
     self.timer = 0
     self.score = 0
 
+    self.birdProjectiles = {}
+
     -- initialize our last recorded Y value for a gap placement to base other gaps off of
     self.lastY = -PIPE_HEIGHT + math.random(80) + 20
     -- number of seconds after the last pipe pair spawned, in which to spawn the next pair
@@ -93,6 +95,13 @@ function PlayState:update(dt)
 
     -- update bird based on gravity and input
     self.bird:update(dt)
+
+    for k, projectile in pairs(self.bird.projectiles) do
+        projectile:update(dt)
+        if projectile.remove then
+            table.remove(self.bird.projectiles, k)
+        end
+    end
 
     -- reset if we get to the ground
     if self.bird.y > VIRTUAL_HEIGHT - 15 then
