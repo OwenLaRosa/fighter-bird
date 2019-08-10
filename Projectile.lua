@@ -42,5 +42,5 @@ function Projectile:render()
     love.graphics.setColor(223, 223, 0, 255)
     love.graphics.setLineWidth(self.lineWidth)
     love.graphics.line(self.x, self.y, self.x + self.xLength, self.y + self.yLength)
-    love.graphics.setColor(225, 255, 255, 255)
+    love.graphics.setColor(255, 255, 255, 255)
 end
