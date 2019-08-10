@@ -56,7 +56,15 @@ function Bird:update(dt)
     self.y = self.y + self.dy
 
     if love.keyboard.wasPressed('lshift') or love.keyboard.wasPressed('rshift') then
-        table.insert(self.projectiles, Projectile(self.x, self.y, VIRTUAL_WIDTH, self.y, 300, 10))
+        table.insert(self.projectiles, Projectile({
+            startX = self.x,
+            startY = self.y,
+            endX = VIRTUAL_WIDTH,
+            endY = self.y,
+            speed = 300,
+            damage = 10,
+            color = {255, 255, 255, 255}
+        }))
     end
 end
 

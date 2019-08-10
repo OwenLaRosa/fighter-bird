@@ -31,6 +31,7 @@ function EnemyManager:update(dt)
                 image = self.saucerImage,
                 width = 60,
                 height = 20,
+                projectileColor = {255, 0, 255, 255},
                 powerup = Powerup({
                     property = "health",
                     value = 25,
@@ -52,6 +53,7 @@ function EnemyManager:update(dt)
                 image = self.aircraftImage,
                 width = 62,
                 height = 32,
+                projectileColor = {255, 255, 0, 255},
             }))
         end
     end
@@ -82,7 +84,15 @@ end
 
 function EnemyManager:fire(enemy)
     if enemy.readyToFire then
-        table.insert(self.projectiles, Projectile(enemy.x, enemy.y, 0, enemy.y + math.random(enemy.sprayMin, enemy.sprayMax), enemy.speed + enemy.projectileSpeed, enemy.damage))
+        table.insert(self.projectiles, Projectile({
+            startX = enemy.x,
+            startY = enemy.y,
+            endX = 0,
+            endY = enemy.y + math.random(enemy.sprayMin, enemy.sprayMax),
+            speed = enemy.speed + enemy.projectileSpeed,
+            damage = enemy.damage,
+            color = enemy.projectileColor
+        }))
         enemy.readyToFire = false
     end
 end

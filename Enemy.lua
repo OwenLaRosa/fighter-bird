@@ -14,6 +14,7 @@ function Enemy:init(def)
     self.width = def.width
     self.height = def.height
     self.image = def.image
+    self.projectileColor = def.projectileColor
 
     self.x = VIRTUAL_WIDTH + 64
     self.y = VIRTUAL_HEIGHT/2 - self.height/2 + math.random(-100, 100)

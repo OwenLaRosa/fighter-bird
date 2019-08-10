@@ -1,21 +1,22 @@
 Projectile = Class{}
 
-function Projectile:init(startX, startY, endX, endY, speed, damage)
-    self.startX = startX
-    self.startY = startY
-    self.endX = endX
-    self.endY = endY
-    self.speed = speed
-    self.damage = damage
-    if endX < startX then
+function Projectile:init(def)
+    self.startX = def.startX
+    self.startY = def.startY
+    self.endX = def.endX
+    self.endY = def.endY
+    self.speed = def.speed
+    self.damage = def.damage
+    self.color = def.color
+    if self.endX < self.startX then
         self.speed = -self.speed
     end
 
     self.slope = (self.endY - self.startY) / (self.endX - self.startX)
     self.inverseSlope = 1 / self.slope
 
-    self.x = startX
-    self.y = startY
+    self.x = self.startX
+    self.y = self.startY
 
     self.width = 12
     self.height = 2
@@ -46,7 +47,7 @@ function Projectile:update(dt)
 end
 
 function Projectile:render()
-    love.graphics.setColor(223, 223, 0, 255)
+    love.graphics.setColor(self.color)
     love.graphics.setLineWidth(self.lineWidth)
     love.graphics.line(self.x, self.y, self.x + self.xLength, self.y + self.yLength)
     love.graphics.setColor(255, 255, 255, 255)
