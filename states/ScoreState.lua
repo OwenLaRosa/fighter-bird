@@ -16,6 +16,7 @@ ScoreState = Class{__includes = BaseState}
 ]]
 function ScoreState:enter(params)
     self.score = params.score
+    self.enemiesDefeated = params.enemiesDefeated
 end
 
 function ScoreState:update(dt)
@@ -35,17 +36,22 @@ function ScoreState:render()
 
     -- display a medal (if any) for the player's performance
     medalImage = nil
-    if self.score >= 5 then
+    if self.score >= 1000 then
         medalImage = love.graphics.newImage("flawless_flapper.png")
-    elseif self.score >= 3 then
+    elseif self.score >= 5000 then
         medalImage = love.graphics.newImage("happy_bird.png")
-    elseif self.score >= 1 then 
+    elseif self.score >= 10000 then 
         medalImage = love.graphics.newImage("lame_duck.png")
+    end
+    if self.enemiesDefeated >= 5 then
+        love.graphics.printf('Kills: ' .. tostring(self.enemiesDefeated .. ' - ' .. math.floor(self.enemiesDefeated/5) .. 'x Ace'), 0, 200, VIRTUAL_WIDTH, 'center')
+    else
+        love.graphics.printf('Kills: ' .. tostring(self.enemiesDefeated), 0, 200, VIRTUAL_WIDTH, 'center')
     end
 
     if medalImage ~= nil then
         love.graphics.draw(medalImage, VIRTUAL_WIDTH / 2 - 64, VIRTUAL_HEIGHT / 2 - 64, 0, 1, 1)
     end
 
-    love.graphics.printf('Press Enter to Play Again!', 0, 200, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Press Enter to Play Again!', 0, 230, VIRTUAL_WIDTH, 'center')
 end

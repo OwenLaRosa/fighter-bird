@@ -22,6 +22,7 @@ function PlayState:init()
     self.pipePairs = {}
     self.timer = 0
     self.score = 0
+    self.enemiesDefeated = 0
 
     self.enemyManager = EnemyManager()
 
@@ -109,6 +110,7 @@ function PlayState:update(dt)
                     table.remove(self.bird.projectiles, k)
                     table.remove(self.enemyManager.enemies, j)
                     self.score = self.score + enemy.points
+                    self.enemiesDefeated = self.enemiesDefeated + 1
                     -- spawn power up if available
                 end
             end
@@ -133,7 +135,8 @@ function PlayState:update(dt)
         sounds['hurt']:play()
 
         gStateMachine:change('score', {
-            score = self.score
+            score = self.score,
+            enemiesDefeated = self.enemiesDefeated
         })
     end
 end
@@ -141,7 +144,8 @@ end
 function PlayState:checkGameOver()
     if self.bird.health < 0 then
         gStateMachine:change('score', {
-            score = self.score
+            score = self.score,
+            enemiesDefeated = self.enemiesDefeated
         })
     end
 end
