@@ -32,6 +32,7 @@ function EnemyManager:update(dt)
                 width = 60,
                 height = 20,
                 projectileColor = {255, 0, 255, 255},
+                projectileSound = "saucer-shoot",
                 powerup = Powerup({
                     property = "health",
                     value = 25,
@@ -54,6 +55,7 @@ function EnemyManager:update(dt)
                 width = 62,
                 height = 32,
                 projectileColor = {255, 255, 0, 255},
+                projectileSound = "aircraft-shoot"
             }))
         end
     end
@@ -93,6 +95,7 @@ function EnemyManager:fire(enemy)
             damage = enemy.damage,
             color = enemy.projectileColor
         }))
+        sounds[enemy.projectileSound]:play()
         enemy.readyToFire = false
     end
 end

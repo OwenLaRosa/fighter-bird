@@ -95,6 +95,13 @@ function love.load()
         ['hurt'] = love.audio.newSource('hurt.wav', 'static'),
         ['score'] = love.audio.newSource('score.wav', 'static'),
         ['pause'] = love.audio.newSource('pause.wav', 'static'),
+        ['aircraft-shoot'] = love.audio.newSource('aircraft_shoot.wav', 'static'),
+        ['bird-hit'] = love.audio.newSource('bird_hit.wav', 'static'),
+        ['bird-shoot'] = love.audio.newSource('bird_shoot.wav', 'static'),
+        ['enemy-hit'] = love.audio.newSource('enemy_hit.wav', 'static'),
+        ['health-powerup'] = love.audio.newSource('health_powerup.wav', 'static'),
+        ['saucer-shoot'] = love.audio.newSource('saucer_shoot.wav', 'static'),
+        ['shock'] = love.audio.newSource('shock.wav', 'static'),
 
         -- https://freesound.org/people/xsgianni/sounds/388079/
         ['music'] = love.audio.newSource('marios_way.mp3', 'static')

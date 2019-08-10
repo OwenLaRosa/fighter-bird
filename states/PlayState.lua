@@ -85,8 +85,7 @@ function PlayState:update(dt)
     for k, pair in pairs(self.pipePairs) do
         for l, pipe in pairs(pair.pipes) do
             if pipe.collidable and self.bird:collides(pipe) then
-                sounds['explosion']:play()
-                sounds['hurt']:play()
+                sounds['shock']:play()
                 pipe.collidable = false
 
                 self.bird.health = self.bird.health - 10
@@ -105,12 +104,12 @@ function PlayState:update(dt)
         projectile:update(dt)
         for j, enemy in pairs(self.enemyManager.enemies) do
             if projectile:collides(enemy) then
+                sounds['enemy-hit']:play()
                 enemy.health = enemy.health - projectile.damage
                 if enemy.health <= 0 then
                     table.remove(self.bird.projectiles, k)
                     -- birds can kill enemies with a cheap shot (overlapping) but powerups are only awarded if fired at a distance
                     if enemy.powerup ~= nil and enemy:collides(self.bird) == false then
-                        print("enemy has powerup")
                         enemy.powerup.x = enemy.x
                         enemy.powerup.y = enemy.y
                         table.insert(self.powerups, enemy.powerup)
@@ -129,6 +128,7 @@ function PlayState:update(dt)
 
     for k, projectile in pairs(self.enemyManager.projectiles) do
         if projectile:collides(self.bird) then
+            sounds['bird-hit']:play()
             self.bird.health = self.bird.health - projectile.damage
             table.remove(self.enemyManager.projectiles, k)
             self:checkGameOver()
@@ -139,6 +139,7 @@ function PlayState:update(dt)
         powerup:update(dt)
         if powerup:collides(self.bird) then
             if powerup.property == "health" then
+                sounds["health-powerup"]:play()
                 self.bird.health = math.min(100, self.bird.health + powerup.value)
             end
             table.remove(self.powerups, k)
