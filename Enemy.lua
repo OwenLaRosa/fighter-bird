@@ -8,7 +8,7 @@ function Enemy:init(def)
     self.points = def.points
     self.projectileSpeed = def.projectileSpeed
     self.fireInterval = def.fireInterval
-    self.spawnPowerup = def.spawnPowerup
+    self.powerup = def.powerup
     self.sprayMin = def.sprayMin
     self.sprayMax = def.sprayMax
 
@@ -34,6 +34,12 @@ function Enemy:update(dt)
     if self.x < 0 then
         self.remove = true
     end
+end
+
+-- used to check for collisions with the bird
+function Enemy:collides(object)
+    return not (self.x + self.width < object.x or self.x > object.x + object.width or
+                self.y + self.height < object.y or self.y > object.y + object.height)
 end
 
 function Enemy:render()

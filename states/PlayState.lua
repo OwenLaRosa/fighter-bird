@@ -25,6 +25,7 @@ function PlayState:init()
     self.enemiesDefeated = 0
 
     self.enemyManager = EnemyManager()
+    self.powerups = {}
 
     -- initialize our last recorded Y value for a gap placement to base other gaps off of
     self.lastY = -PIPE_HEIGHT + math.random(80) + 20
@@ -104,14 +105,19 @@ function PlayState:update(dt)
         projectile:update(dt)
         for j, enemy in pairs(self.enemyManager.enemies) do
             if projectile:collides(enemy) then
-                print("collides enemy")
                 enemy.health = enemy.health - projectile.damage
                 if enemy.health <= 0 then
                     table.remove(self.bird.projectiles, k)
+                    -- birds can kill enemies with a cheap shot (overlapping) but powerups are only awarded if fired at a distance
+                    if enemy.powerup ~= nil and enemy:collides(self.bird) == false then
+                        print("enemy has powerup")
+                        enemy.powerup.x = enemy.x
+                        enemy.powerup.y = enemy.y
+                        table.insert(self.powerups, enemy.powerup)
+                    end
                     table.remove(self.enemyManager.enemies, j)
                     self.score = self.score + enemy.points
                     self.enemiesDefeated = self.enemiesDefeated + 1
-                    -- spawn power up if available
                 end
             end
         end
@@ -126,6 +132,16 @@ function PlayState:update(dt)
             self.bird.health = self.bird.health - projectile.damage
             table.remove(self.enemyManager.projectiles, k)
             self:checkGameOver()
+        end
+    end
+
+    for k, powerup in pairs(self.powerups) do
+        powerup:update(dt)
+        if powerup:collides(self.bird) then
+            if powerup.property == "health" then
+                self.bird.health = math.min(100, self.bird.health + powerup.value)
+            end
+            table.remove(self.powerups, k)
         end
     end
 
@@ -153,6 +169,11 @@ end
 function PlayState:render()
     for k, pair in pairs(self.pipePairs) do
         pair:render()
+    end
+
+    for k, powerup in pairs(self.powerups) do
+        print("render powerup")
+        powerup:render()
     end
 
     love.graphics.setFont(flappyFont)

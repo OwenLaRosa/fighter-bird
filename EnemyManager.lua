@@ -23,7 +23,11 @@ function EnemyManager:update(dt)
                 projectileSpeed = 130,
                 fireInterval = 1,
                 sprayMin = -400,
-                sprayMax = 400
+                sprayMax = 400,
+                powerup = Powerup({
+                    property = "health",
+                    value = 25
+                })
             }))
         else
             -- spawn aircraft

@@ -36,11 +36,11 @@ function ScoreState:render()
 
     -- display a medal (if any) for the player's performance
     medalImage = nil
-    if self.score >= 1000 then
+    if self.score >= 10000 then
         medalImage = love.graphics.newImage("flawless_flapper.png")
     elseif self.score >= 5000 then
         medalImage = love.graphics.newImage("happy_bird.png")
-    elseif self.score >= 10000 then 
+    elseif self.score >= 1000 then 
         medalImage = love.graphics.newImage("lame_duck.png")
     end
     if self.enemiesDefeated >= 5 then

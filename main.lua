@@ -45,6 +45,7 @@ require 'PipePair'
 require 'Projectile'
 require 'Enemy'
 require 'EnemyManager'
+require 'Powerup'
 
 -- physical screen dimensions
 WINDOW_WIDTH = 1280
