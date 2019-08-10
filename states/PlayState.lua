@@ -23,7 +23,7 @@ function PlayState:init()
     self.timer = 0
     self.score = 0
 
-    self.birdProjectiles = {}
+    self.enemyManager = EnemyManager()
 
     -- initialize our last recorded Y value for a gap placement to base other gaps off of
     self.lastY = -PIPE_HEIGHT + math.random(80) + 20
@@ -96,6 +96,9 @@ function PlayState:update(dt)
     -- update bird based on gravity and input
     self.bird:update(dt)
 
+    -- update enemies and projectiles
+    self.enemyManager:update(dt)
+
     for k, projectile in pairs(self.bird.projectiles) do
         projectile:update(dt)
         if projectile.remove then
@@ -123,6 +126,7 @@ function PlayState:render()
     love.graphics.print('Score: ' .. tostring(self.score), 8, 8)
 
     self.bird:render()
+    self.enemyManager:render()
 end
 
 --[[

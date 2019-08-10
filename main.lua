@@ -43,6 +43,8 @@ require 'Bird'
 require 'Pipe'
 require 'PipePair'
 require 'Projectile'
+require 'Enemy'
+require 'EnemyManager'
 
 -- physical screen dimensions
 WINDOW_WIDTH = 1280

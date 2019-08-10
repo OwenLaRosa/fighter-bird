@@ -4,13 +4,15 @@ function Projectile:init(startX, startY, endX, endY, speed)
     self.startX = startX
     self.startY = startY
     self.endX = endX
-    self.endY = endY + math.random(-500, 500)
+    self.endY = endY
     self.speed = speed
+    if endX < startX then
+        self.speed = -self.speed
+    end
 
     self.slope = (self.endY - self.startY) / (self.endX - self.startX)
     self.inverseSlope = 1 / self.slope
 
-    print(self.slope)
     self.x = startX
     self.y = startY
 
