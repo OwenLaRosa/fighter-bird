@@ -1,11 +1,12 @@
 Projectile = Class{}
 
-function Projectile:init(startX, startY, endX, endY, speed)
+function Projectile:init(startX, startY, endX, endY, speed, damage)
     self.startX = startX
     self.startY = startY
     self.endX = endX
     self.endY = endY
     self.speed = speed
+    self.damage = damage
     if endX < startX then
         self.speed = -self.speed
     end
@@ -27,6 +28,8 @@ function Projectile:init(startX, startY, endX, endY, speed)
     self.yLength = self.length * math.sin(angle)
 
     self.remove = false
+
+    self:updateCollisionBox()
 end
 
 function Projectile:update(dt)
@@ -38,6 +41,8 @@ function Projectile:update(dt)
     elseif (self.startY < self.endY and self.y > self.endY) or (self.startY > self.endY and self.y + self.yLength < self.endY) then
         self.remove = true
     end
+
+    self:updateCollisionBox()
 end
 
 function Projectile:render()
@@ -45,4 +50,23 @@ function Projectile:render()
     love.graphics.setLineWidth(self.lineWidth)
     love.graphics.line(self.x, self.y, self.x + self.xLength, self.y + self.yLength)
     love.graphics.setColor(255, 255, 255, 255)
+end
+
+-- object must have x, y, width, and height properties.
+-- used by the bird and enemy
+function Projectile:collides(object)
+    return not (self.collisionBoxX + self.collisionBoxWidth < object.x or self.collisionBoxX > object.x + object.width or
+                self.collisionBoxY + self.collisionBoxHeight < object.y or self.collisionBoxY > object.y + object.height)
+end
+
+function Projectile:updateCollisionBox()
+    -- only check collisions with the front of the projectile
+    self.collisionBoxWidth = self.lineWidth
+    self.collisionBoxHeight = self.lineWidth
+    self.collisionBoxX = self.x - self.collisionBoxWidth/2
+    self.collisionBoxY = self.y - self.collisionBoxHeight/2
+    if self.speed > 0 then
+        self.collisionBoxX = self.collisionBoxX + self.xLength
+        self.collisionBoxY = self.collisionBoxY + self.yLength
+    end
 end

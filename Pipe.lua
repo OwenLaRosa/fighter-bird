@@ -22,6 +22,9 @@ function Pipe:init(orientation, y)
     self.height = PIPE_HEIGHT
 
     self.orientation = orientation
+
+    -- each pipe can collide with the player once
+    self.collidable = true
 end
 
 function Pipe:update(dt)

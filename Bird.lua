@@ -23,6 +23,7 @@ function Bird:init()
     self.dy = 0
 
     self.projectiles = {}
+    self.health = 100
 end
 
 --[[
@@ -55,7 +56,7 @@ function Bird:update(dt)
     self.y = self.y + self.dy
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        table.insert(self.projectiles, Projectile(self.x, self.y, VIRTUAL_WIDTH, self.y, 50))
+        table.insert(self.projectiles, Projectile(self.x, self.y, VIRTUAL_WIDTH, self.y, 300, 10))
     end
 end
 

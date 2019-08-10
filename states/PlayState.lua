@@ -59,7 +59,7 @@ function PlayState:update(dt)
         -- be sure to ignore it if it's already been scored
         if not pair.scored then
             if pair.x + PIPE_WIDTH < self.bird.x then
-                self.score = self.score + 1
+                self.score = self.score + 100
                 pair.scored = true
                 sounds['score']:play()
             end
@@ -82,13 +82,13 @@ function PlayState:update(dt)
     -- simple collision between bird and all pipes in pairs
     for k, pair in pairs(self.pipePairs) do
         for l, pipe in pairs(pair.pipes) do
-            if self.bird:collides(pipe) then
+            if pipe.collidable and self.bird:collides(pipe) then
                 sounds['explosion']:play()
                 sounds['hurt']:play()
+                pipe.collidable = false
 
-                gStateMachine:change('score', {
-                    score = self.score
-                })
+                self.bird.health = self.bird.health - 10
+                self:checkGameOver()
             end
         end
     end
@@ -101,8 +101,29 @@ function PlayState:update(dt)
 
     for k, projectile in pairs(self.bird.projectiles) do
         projectile:update(dt)
+        for j, enemy in pairs(self.enemyManager.enemies) do
+            if projectile:collides(enemy) then
+                print("collides enemy")
+                enemy.health = enemy.health - projectile.damage
+                if enemy.health <= 0 then
+                    table.remove(self.bird.projectiles, k)
+                    table.remove(self.enemyManager.enemies, j)
+                    self.score = self.score + enemy.points
+                    -- spawn power up if available
+                end
+            end
+        end
+
         if projectile.remove then
             table.remove(self.bird.projectiles, k)
+        end
+    end
+
+    for k, projectile in pairs(self.enemyManager.projectiles) do
+        if projectile:collides(self.bird) then
+            self.bird.health = self.bird.health - projectile.damage
+            table.remove(self.enemyManager.projectiles, k)
+            self:checkGameOver()
         end
     end
 
@@ -117,6 +138,14 @@ function PlayState:update(dt)
     end
 end
 
+function PlayState:checkGameOver()
+    if self.bird.health < 0 then
+        gStateMachine:change('score', {
+            score = self.score
+        })
+    end
+end
+
 function PlayState:render()
     for k, pair in pairs(self.pipePairs) do
         pair:render()
@@ -124,6 +153,7 @@ function PlayState:render()
 
     love.graphics.setFont(flappyFont)
     love.graphics.print('Score: ' .. tostring(self.score), 8, 8)
+    love.graphics.print('Health: ' .. tostring(self.bird.health), VIRTUAL_WIDTH/2, 8)
 
     self.bird:render()
     self.enemyManager:render()

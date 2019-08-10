@@ -5,6 +5,7 @@ function Enemy:init(def)
     self.health = def.health
     self.speed = def.speed
     self.damage = def.damage
+    self.points = def.points
     self.projectileSpeed = def.projectileSpeed
     self.fireInterval = def.fireInterval
     self.spawnPowerup = def.spawnPowerup
