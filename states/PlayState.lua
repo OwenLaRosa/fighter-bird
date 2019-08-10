@@ -158,7 +158,7 @@ function PlayState:update(dt)
 end
 
 function PlayState:checkGameOver()
-    if self.bird.health < 0 then
+    if self.bird.health <= 0 then
         gStateMachine:change('score', {
             score = self.score,
             enemiesDefeated = self.enemiesDefeated
