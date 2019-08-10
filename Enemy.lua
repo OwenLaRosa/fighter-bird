@@ -16,7 +16,7 @@ function Enemy:init(def)
     self.image = def.image
 
     self.x = VIRTUAL_WIDTH + 64
-    self.y = VIRTUAL_HEIGHT/2
+    self.y = VIRTUAL_HEIGHT/2 - self.height/2 + math.random(-100, 100)
 
     self.remove = false
 
