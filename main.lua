@@ -79,7 +79,7 @@ function love.load()
     math.randomseed(os.time())
 
     -- app window title
-    love.window.setTitle('Fifty Bird')
+    love.window.setTitle('Fighter Bird')
 
     -- initialize our nice-looking retro text fonts
     smallFont = love.graphics.newFont('font.ttf', 8)
