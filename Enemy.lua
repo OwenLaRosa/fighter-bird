@@ -18,7 +18,7 @@ function Enemy:init(def)
     self.projectileSound = def.projectileSound
 
     self.x = VIRTUAL_WIDTH + 64
-    self.y = VIRTUAL_HEIGHT/2 - self.height/2 + math.random(-80, 80)
+    self.y = VIRTUAL_HEIGHT/2 - self.height/2 + math.random(-70, 70)
 
     self.remove = false
 

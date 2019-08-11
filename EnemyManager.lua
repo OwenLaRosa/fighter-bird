@@ -21,7 +21,7 @@ function EnemyManager:update(dt)
             table.insert(self.enemies, Enemy({
                 type = "saucer",
                 health = 20,
-                speed = 60,
+                speed = 100,
                 damage = 12,
                 points = 500,
                 projectileSpeed = 130,
@@ -44,7 +44,7 @@ function EnemyManager:update(dt)
             table.insert(self.enemies, Enemy({
                 type = "aircraft",
                 health = 10,
-                speed = 100,
+                speed = 130,
                 damage = 9,
                 points = 150,
                 projectileSpeed = 100,
