@@ -173,7 +173,6 @@ function PlayState:render()
     end
 
     for k, powerup in pairs(self.powerups) do
-        print("render powerup")
         powerup:render()
     end
 
